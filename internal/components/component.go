@@ -38,6 +38,9 @@ type PortRetriever interface {
 	GetPortNumOrDefault(logr.Logger, int32) int32
 }
 
+// AddressParser is a function that overwrites not configured address fields with ether 0.0.0.0 or $POD_IP.
+type AddressParser[ComponentConfigType any] func(logger logr.Logger, config ComponentConfigType) (int, error)
+
 // PortParser is a function that returns a list of servicePorts given a config of type Config.
 type PortParser[ComponentConfigType any] func(logger logr.Logger, name string, defaultPort *corev1.ServicePort, config ComponentConfigType) ([]corev1.ServicePort, error)
 

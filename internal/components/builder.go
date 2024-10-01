@@ -32,8 +32,11 @@ type Settings[ComponentConfigType any] struct {
 	nodePort    int32
 	name        string
 	port        int32
-	portParser  PortParser[ComponentConfigType]
-	rbacGen     RBACRuleGenerator[ComponentConfigType]
+	// NOTE: this is currently not in use.
+	// We may want to use 0.0.0.0 or $POD_IP by default.
+	defaultAddress string
+	portParser     PortParser[ComponentConfigType]
+	rbacGen        RBACRuleGenerator[ComponentConfigType]
 }
 
 func NewEmptySettings[ComponentConfigType any]() *Settings[ComponentConfigType] {
@@ -63,6 +66,11 @@ func NewBuilder[ComponentConfigType any]() Builder[ComponentConfigType] {
 	return []ParserOption[ComponentConfigType]{}
 }
 
+func (b Builder[ComponentConfigType]) WithDefaultAddress(defaultAddress string) Builder[ComponentConfigType] {
+	return append(b, func(o *Settings[ComponentConfigType]) {
+		o.defaultAddress = defaultAddress
+	})
+}
 func (b Builder[ComponentConfigType]) WithProtocol(protocol corev1.Protocol) Builder[ComponentConfigType] {
 	return append(b, func(o *Settings[ComponentConfigType]) {
 		o.protocol = protocol

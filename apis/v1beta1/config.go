@@ -141,6 +141,22 @@ type Config struct {
 	Service    Service    `json:"service" yaml:"service"`
 }
 
+func (c *Config) ConfigureDefaults(logger logr.Logger, componentKinds ...ComponentKind) (int, error) {
+	enabledComponents := c.GetEnabledComponents()
+	for _, componentKind := range componentKinds {
+		var retriever components.ParserRetrieveir
+		components.ParserOption
+		switch componentKind {
+		case KindReceiver:
+
+		case KindExporter:
+		default:
+			continue
+		}
+
+	}
+}
+
 // getRbacRulesForComponentKinds gets the RBAC Rules for the given ComponentKind(s).
 func (c *Config) getRbacRulesForComponentKinds(logger logr.Logger, componentKinds ...ComponentKind) ([]rbacv1.PolicyRule, error) {
 	var rules []rbacv1.PolicyRule

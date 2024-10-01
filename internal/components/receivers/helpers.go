@@ -47,6 +47,11 @@ func NewScraperParser(name string) *components.GenericParser[any] {
 	return components.NewBuilder[any]().WithName(name).WithPort(components.UnsetPort).MustBuild()
 }
 
+// NewScraperParser is an instance of a generic parser that returns nothing when called and never fails.
+func NewDefaultParser(name string) *components.GenericParser[any] {
+	return components.NewBuilder[any]().WithName(name).WithPort(components.UnsetPort).MustBuild()
+}
+
 var (
 	componentParsers = []components.Parser{
 		components.NewMultiPortReceiverBuilder("otlp").
